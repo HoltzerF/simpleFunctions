@@ -56,7 +56,7 @@ int clipPolyPlane(vec2_t *verts, int vertCount, plane_t *p)
 		if(dstart >= 0)	//start inside
 		{
 			stack[stack_pos++] = *start;
-			if(dend < 0)
+			if(dend < 0 && dstart != 0)
 			{
 				stack[stack_pos++] = clip_edge(start, dstart, end, dend);
 			}
