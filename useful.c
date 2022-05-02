@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #define min(a, b) (a < b ? a : b)
 #define max(a, b) (a < b ? b : a)
@@ -94,27 +95,14 @@ float mrand(float min, float max){
 	return range(rand(), 0, RAND_MAX, min, max);
 }
 
-// returns the same results as C modulo operator
-int mod(int n, int div){
-	
-	div = div < 0 ? -div : div;
-	
-	int sign = (n < 0);
-	n = sign ? -n : n;
-	
-	while(n > div)
-		n -= div;
-	
-	return sign ? -n : n;
-}
-
 // returns the fibonacci number for a specific position
+// if h is smaller than zero, function returns -1
 int fibonacci(int h){
 	int l, n, f;	// last, new, fibo
-	f = l = 0;
+	f = l = -1;
 	n = 1;
 	
-	while(h-- > 0){
+	while(h-- > -1){
 		f = l + n;
 		l = n;
 		n = f;
@@ -123,6 +111,17 @@ int fibonacci(int h){
 	return f;
 }
 
+// same as n % 2
+int mod2(int n){
+	return (n & 1) * (1 - 2 * (n < 0));
+}
+
+// same as n % m
+int mod(int n, int m){
+    return (n - m * (n / m));
+}
+
 int main(){
+	
 	return 0;
 }
