@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 
 #define min(a, b) (a < b ? a : b)
 #define max(a, b) (a < b ? b : a)
@@ -69,9 +68,8 @@ void swapMem(void *a, void *b, int size){
 // calculates the factorial, mind integer overflow
 int factorial(int n){
 	int i, faco;
-	for(i = 1, faco = 1; i <= n; i++){
+	for(i = 1, faco = 1; i <= n; i++)
   		faco *= i;
-	}
 	return faco;
 }
 
