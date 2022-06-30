@@ -2,8 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-// searches a file for an string and sets file pointer infront of string
-// returns 1 if string found, 0 if not
+/* searches a file for an string starting at current file pointer
+ * finally sets file pointer infront of string
+ * returns 1 if string found, 0 if not
+ * uses malloc
+ */
 int fsearch(FILE *fptr, char *str){
 	
 	// allocate memory to hold null terminated str
@@ -40,9 +43,16 @@ int fsearch(FILE *fptr, char *str){
 	return 0;
 }
 
-// sets the file pointer to the start of a specific line
-// starting with 1
+/* sets the file pointer to the start of a specific line
+ * starting from beginning of file within line 1
+ * returns 1 if line exist's, 0 if not
+ */
 int fline(FILE *fptr, int linenumber){
+	
+	// sets the filepointer to beginning of file
+	fseek(fptr, 0, SEEK_SET);
+	
+	// counts the newlines untile we hit linenumber
 	char c;
 	int i = 1;
 	while((c = fgetc(fptr)) != EOF){
@@ -55,14 +65,25 @@ int fline(FILE *fptr, int linenumber){
 	return 0;
 }
 
-// copies the content of a file into another file#
-// for a specific size
+/* returns the filesize without changing the file pointer
+ */
+long fsize(FILE *fptr){
+	long tmp = ftell(fptr); // saving file pointer
+	
+	fseek(fptr, 0, SEEK_END);
+	long size = ftell(fptr); // getting filesize
+	
+	fseek(fptr, tmp, SEEK_SET); // restoring file pointer
+	return size;
+}
+
+/* copies the content of a file into another file
+ * for a specific size
+ */
 void fcpy(FILE *a, FILE *b, long length){
 	char c;
 	long i = 0;
-	while((c = fgetc(a)) != EOF && i <= length){
+	while((c = fgetc(a)) != EOF && i++ < length){
 		fputc(c, b);
-		++i;
-		
 	}
 }
